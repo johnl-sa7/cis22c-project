@@ -6,9 +6,7 @@ import java.util.Scanner;
 import java.io.*;
 
 public class UserInterface {
-
 	public static void main(String[] args) throws IOException {
-
 		final int NUM_ACCOUNT = 30;
 		final int NUM_USERS = 30;
 		final int NUM_INTEREST= 20;
@@ -30,7 +28,6 @@ public class UserInterface {
 		try {
 			Scanner input = new Scanner(file);
 			while (input.hasNextLine()) {
-				int userIndex = 0;
 				String[] str = new String[35];
 				for(int i = 0; i < 35; i++) {
 					if (input.hasNextLine()) {
@@ -45,14 +42,11 @@ public class UserInterface {
 				int friendNum = Integer.parseInt(str[4]);
 				ArrayList<User> friendArray = new ArrayList<>();
 				ArrayList<Interest> userInterest = new ArrayList<>();
-				System.out.println("test:" + friendNum);
 				List tempFriendsList = new List();
 				for(int h = 0; h < friendNum; h++) {
-					System.out.println(str[h+5]);
 					tempFriendsList.addLast(str[h+5]);
 				}
 				tempFriends.add(tempFriendsList);
-				userIndex++;
 				for(int j = 0; j < Integer.parseInt(str[5 + friendNum]); j++) {
 
 					String[] temp = str[j + friendNum + 6].split("#", 2);
@@ -82,18 +76,22 @@ public class UserInterface {
 		}
 
 		//Rebuild the friend bst for everyone
+		//create user graph
+		Graph userGraph = new Graph(userNames.getNumElements());
 		for(int i = 0; i < userNames.getNumElements(); i++) {
 			User tempU = new User(tempUsers.get(i));
 			User currentUser = userNames.get(tempU);
+
 			for(int j = 0; j < tempFriends.get(i).getLength(); j++) {
 				tempFriends.get(i).placeIterator();
 				User tempF = new User(tempFriends.get(i).getIterator());
 				User currentFriend = userNames.get(tempF);
 				currentUser.addFriend(currentFriend);
+				userGraph.addUndirectedEdge(i,currentFriend.getUserId());
 			}
-
 		}
-
+		userGraph.BFS(0);
+		userGraph.printBFS();
 
 		//login process optionA
 		//problem: do not know how to assign a userId to a new user
@@ -288,7 +286,7 @@ public class UserInterface {
 				}
 			}
 			else if(in.equals("C")) {
-
+				System.out.println(userGraph.toString());
 			}
 			else if (in.equals("D")) {
 				//quit and write records to file OutputPrincesses

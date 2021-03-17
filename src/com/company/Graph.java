@@ -30,6 +30,10 @@ public class Graph {
         this.color = new ArrayList<Character>();
         this.distance = new ArrayList<Integer>();
         this.parent = new ArrayList<Integer>();
+
+        for (int i = 0; i < n; i++) {
+            adj.add(new List<Integer>());
+        }
     }
 
 
@@ -56,7 +60,7 @@ public class Graph {
      * @return whether the graph is empty
      */
     public boolean isEmpty() {
-        return vertices != 0;
+        return vertices == 0;
     }
 
     public int getUser(String userName) throws IndexOutOfBoundsException {
@@ -67,6 +71,11 @@ public class Graph {
         }
         return -1;
     }
+
+    public List<Integer> getUserAdjList(int n) {
+        return adj.get(n);
+    }
+
     /**
      * Returns the value of the distance[v]
      * @param v a vertex in the graph
@@ -123,19 +132,25 @@ public class Graph {
         if (vertex < 0 && newVertex > this.vertices) {
             throw new IndexOutOfBoundsException("getColor(): " + newVertex + " is out of bounds.");
         } else {
-            if (!adj.isEmpty() && adj.get(vertex).getLast() >= newVertex) {
+//            System.out.println("v:"+vertex);
+//            System.out.println("new:"+newVertex);
+            if(adj.get(vertex).isEmpty()){
+                adj.get(vertex).addLast(newVertex);
+            } else if (!adj.isEmpty() && adj.get(vertex).getLast() >= newVertex) {
                 adj.get(vertex).placeIterator();
-                while(adj.get(vertex).getIterator() != null) {
+                while(adj.get(vertex).getIterator() < adj.get(vertex).getLength()) {
                     if (adj.get(vertex).getIterator() > newVertex) {
                         adj.get(vertex).reverseIterator();
                         adj.get(vertex).addIterator(newVertex);
                         break;
+                    } else {
+                        adj.get(vertex).advanceIterator();
                     }
-                    adj.get(vertex).advanceIterator();
                 }
             } else {
                 adj.get(vertex).addLast(newVertex);
             }
+//            System.out.println(adj);
             vertices++;
             edges++;
         }
@@ -154,7 +169,6 @@ public class Graph {
         }
         addDirectedEdge(vertex, newVertex);
         addDirectedEdge(newVertex, vertex);
-        vertices++;
         edges++;
     }
 
