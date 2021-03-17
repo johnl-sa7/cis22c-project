@@ -59,6 +59,14 @@ public class Graph {
         return vertices != 0;
     }
 
+    public int getUser(String userName) throws IndexOutOfBoundsException {
+        for(int i = 0; i < user.size(); i++) {
+            if (user.get(i).getUserName().equals(userName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     /**
      * Returns the value of the distance[v]
      * @param v a vertex in the graph
@@ -67,7 +75,7 @@ public class Graph {
      * @throws IndexOutOfBoundsException when
      * the precondition is violated
      */
-    public Integer getDistance(Integer v) throws IndexOutOfBoundsException{
+    public int getDistance(int v) throws IndexOutOfBoundsException{
         if (v <= 0 && v > vertices) {
             throw new IndexOutOfBoundsException("getDistance(): " + v + " is out of bounds.");
         }
@@ -81,7 +89,7 @@ public class Graph {
      * @return the parent of vertex v
      * @throws IndexOutOfBoundsException when the precondition is violated
      */
-    public Integer getParent(Integer v) throws IndexOutOfBoundsException {
+    public int getParent(int v) throws IndexOutOfBoundsException {
         if (v > vertices) {
             throw new IndexOutOfBoundsException("getParent(): " + v + " is out of bounds.");
         }
@@ -95,7 +103,7 @@ public class Graph {
      * @return the color of vertex v
      * @throws IndexOutOfBoundsException when the precondition is violated
      */
-    public Character getColor(Integer v) throws IndexOutOfBoundsException {
+    public Character getColor(int v) throws IndexOutOfBoundsException {
         if (v <= 0 && v > vertices) {
             throw new IndexOutOfBoundsException("getColor(): " + v + " is out of bounds.");
         }
@@ -111,13 +119,26 @@ public class Graph {
      * @throws IndexOutOfBoundsException when the precondition
      * is violated
      */
-    public void addDirectedEdge(Integer vertex, Integer newVertex) throws IndexOutOfBoundsException {
-        if (vertex < 0 && newVertex > vertices) {
+    public void addDirectedEdge(int vertex, int newVertex) throws IndexOutOfBoundsException {
+        if (vertex < 0 && newVertex > this.vertices) {
             throw new IndexOutOfBoundsException("getColor(): " + newVertex + " is out of bounds.");
+        } else {
+            if (!adj.isEmpty() && adj.get(vertex).getLast() >= newVertex) {
+                adj.get(vertex).placeIterator();
+                while(adj.get(vertex).getIterator() != null) {
+                    if (adj.get(vertex).getIterator() > newVertex) {
+                        adj.get(vertex).reverseIterator();
+                        adj.get(vertex).addIterator(newVertex);
+                        break;
+                    }
+                    adj.get(vertex).advanceIterator();
+                }
+            } else {
+                adj.get(vertex).addLast(newVertex);
+            }
+            vertices++;
+            edges++;
         }
-        adj.get(vertex).addLast(newVertex);
-        vertices++;
-        edges++;
     }
 
     /**
@@ -127,12 +148,12 @@ public class Graph {
      * @precondition, 0 < u, v <= vertices
      *
      */
-    public void addUndirectedEdge(Integer vertex, Integer newVertex) throws IndexOutOfBoundsException {
+    public void addUndirectedEdge(int vertex, int newVertex) throws IndexOutOfBoundsException {
         if (vertex < 0 && newVertex > vertices) {
             throw new IndexOutOfBoundsException("getColor(): " + newVertex + " is out of bounds.");
         }
-        adj.get(vertex).addLast(newVertex);
-        adj.get(newVertex).addLast((vertex));
+        addDirectedEdge(vertex, newVertex);
+        addDirectedEdge(newVertex, vertex);
         vertices++;
         edges++;
     }
@@ -176,7 +197,7 @@ public class Graph {
      * is not a vertex in the graph
      */
 
-    public void BFS(Integer source) throws IllegalStateException, IndexOutOfBoundsException {
+    public void BFS(int source) throws IllegalStateException, IndexOutOfBoundsException {
         Queue<Integer> queue = new Queue<Integer>();
         if (isEmpty()) {
             throw new IllegalStateException("BFS(): graph is empty");
