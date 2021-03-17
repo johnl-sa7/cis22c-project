@@ -2,6 +2,7 @@ package com.company; /** Course Project CS 22c
  *Autor: Chengyun Li
  */
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
 
@@ -87,11 +88,10 @@ public class UserInterface {
 				User tempF = new User(tempFriends.get(i).getIterator());
 				User currentFriend = userNames.get(tempF);
 				currentUser.addFriend(currentFriend);
-				userGraph.addUndirectedEdge(i,currentFriend.getUserId());
+				userGraph.addUndirectedEdge(i, currentFriend.getUserId());
 			}
 		}
-		userGraph.BFS(0);
-		userGraph.printBFS();
+
 
 		//login process optionA
 		//problem: do not know how to assign a userId to a new user
@@ -126,7 +126,6 @@ public class UserInterface {
 		System.out.println("\nWelcome, " + userAccount.getUser().getFirstName() + " " + userAccount.getUser().getLastName() + "!\n");
 
 		System.out.println("Welcome to The Princess System!");
-
 		while(true) {
 			//print menu
 			System.out.println("\nA. View My Friends");
@@ -286,7 +285,28 @@ public class UserInterface {
 				}
 			}
 			else if(in.equals("C")) {
-				System.out.println(userGraph.toString());
+				ArrayList<String> recommended = new ArrayList<String>();
+//				ArrayList<ArrayList<String>> recommended = new ArrayList<ArrayList<String>>();
+				userGraph.BFS(user.getUserId());
+				for (int i = 0; i < tempUsers.size(); i ++){
+					String tempUserName = tempUsers.get(i);
+					int distance = userGraph.getDistance(i);
+					if (distance >= 2 && user.getFriendByName(tempUserName) == null) {
+						recommended.add(distance + ": (" + i + ") " + tempUserName);
+//						System.out.println(distance + ":(id:" + i + "):" + tempUserName);
+					}
+				}
+				System.out.println("Some friends you may know:");
+				for(int i = 0; i < 5; i++){
+					for(int j = 0; j < recommended.size(); j++){
+						String[] recommendedUser = recommended.get(j).split(":", 0);
+						if (Integer.parseInt(recommendedUser[0]) == i){
+							System.out.println(recommended.get(j));
+						}
+					}
+				}
+//				userGraph.getDistance();
+//				userGraph.printBFS();
 			}
 			else if (in.equals("D")) {
 				//quit and write records to file OutputPrincesses

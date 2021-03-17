@@ -339,7 +339,7 @@ public class List<T> {
 			result += temp.data + " ";
 			temp = temp.next;
 		}
-		return result + "\n";
+		return result;
 	}
 
 	/**

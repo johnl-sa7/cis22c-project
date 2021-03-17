@@ -72,10 +72,6 @@ public class Graph {
         return -1;
     }
 
-    public List<Integer> getUserAdjList(int n) {
-        return adj.get(n);
-    }
-
     /**
      * Returns the value of the distance[v]
      * @param v a vertex in the graph
@@ -132,26 +128,28 @@ public class Graph {
         if (vertex < 0 && newVertex > this.vertices) {
             throw new IndexOutOfBoundsException("getColor(): " + newVertex + " is out of bounds.");
         } else {
-//            System.out.println("v:"+vertex);
-//            System.out.println("new:"+newVertex);
-            if(adj.get(vertex).isEmpty()){
-                adj.get(vertex).addLast(newVertex);
-            } else if (!adj.isEmpty() && adj.get(vertex).getLast() >= newVertex) {
-                adj.get(vertex).placeIterator();
-                while(adj.get(vertex).getIterator() < adj.get(vertex).getLength()) {
-                    if (adj.get(vertex).getIterator() > newVertex) {
-                        adj.get(vertex).reverseIterator();
-                        adj.get(vertex).addIterator(newVertex);
-                        break;
+            if (adj.get(vertex).linearSearch(newVertex) == -1) {
+                if (adj.get(vertex).isEmpty()) {
+                    adj.get(vertex).addLast(newVertex);
+                } else if (!adj.isEmpty() && adj.get(vertex).getLast() >= newVertex) {
+                    if (adj.get(vertex).getFirst() >= newVertex) {
+                        adj.get(vertex).addFirst(newVertex);
                     } else {
-                        adj.get(vertex).advanceIterator();
+                        adj.get(vertex).placeIterator();
+                        while (adj.get(vertex).getIterator() < adj.get(vertex).getLength()) {
+                            if (adj.get(vertex).getIterator() > newVertex) {
+                                adj.get(vertex).reverseIterator();
+                                adj.get(vertex).addIterator(newVertex);
+                                break;
+                            } else {
+                                adj.get(vertex).advanceIterator();
+                            }
+                        }
                     }
+                } else {
+                    adj.get(vertex).addLast(newVertex);
                 }
-            } else {
-                adj.get(vertex).addLast(newVertex);
             }
-//            System.out.println(adj);
-            vertices++;
             edges++;
         }
     }
@@ -195,9 +193,9 @@ public class Graph {
      * Note that this method is intended purely to help you debug your code
      */
     public void printBFS() {
-        System.out.println("v \t c \t p \t d");
+        System.out.println("id \t\t\t v \t\t\t c \t\t\t p \t\t\t d");
         for (int i = 0; i < adj.size(); i++) {
-            System.out.println(adj.get(i) + "\t" + color.get(i) + "\t" + parent.get(i) + "\t" + distance.get(i));
+            System.out.println(i + "\t\t\t" + adj.get(i) + "\t\t\t" + color.get(i) + "\t\t\t" + parent.get(i) + "\t\t\t" + distance.get(i));
         }
     }
 
@@ -220,9 +218,9 @@ public class Graph {
             throw new IndexOutOfBoundsException("BFS(): " + source + "is not in range." );
         }
         for (int i = 0; i < adj.size(); i++) {
-            color.set(i, 'W');
-            distance.set(i, -1);
-            parent.set(i, null);
+            color.add(i, 'W');
+            distance.add(i, -1);
+            parent.add(i, null);
         }
         color.set(source, 'G');
         distance.set(source, 0);
@@ -230,13 +228,16 @@ public class Graph {
         while(!queue.isEmpty()){
             int x = queue.getFront();
             queue.dequeue();
+            adj.get(x).placeIterator();
             for (int i = 0; i < adj.get(x).getLength(); i++) {
-                if (color.get(i) == 'W') {
-                    color.set(i, 'G');
-                    distance.set(i, distance.get(x) + 1);
-                    parent.set(i, x);
-                    queue.enqueue(i);
+                int iter = adj.get(x).getIterator();
+                if (color.get(iter) == 'W') {
+                    color.set(iter, 'G');
+                    distance.set(iter, distance.get(x) + 1);
+                    parent.set(iter, x);
+                    queue.enqueue(iter);
                 }
+                adj.get(x).advanceIterator();
             }
             color.set(x, 'B');
         }
