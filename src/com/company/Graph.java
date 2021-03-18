@@ -117,6 +117,25 @@ public class Graph {
 
     /*** Mutators ***/
 
+    public void removeDirectedEdge(int vertex, int newVertex) throws IndexOutOfBoundsException {
+        if (vertex < 0 && newVertex > this.vertices) {
+            throw new IndexOutOfBoundsException("getColor(): " + newVertex + " is out of bounds.");
+        } else {
+            adj.get(vertex).placeIterator();
+            while(adj.get(vertex).getIterator() < adj.get(vertex).getLength()) {
+                if ( adj.get(vertex).getIterator() == newVertex) {
+                    adj.get(vertex).removeIterator();
+                }
+            }
+        }
+    }
+
+    public void removeUndirectedEdge(int vertex, int newVertex) {
+        removeDirectedEdge(vertex, newVertex);
+        removeDirectedEdge(newVertex, vertex);
+        edges--;
+    }
+
     /**
      * Inserts vertex v into the adjacency list of vertex u
      * (i.e. inserts v into the list at index u)
@@ -131,15 +150,20 @@ public class Graph {
             if (adj.get(vertex).linearSearch(newVertex) == -1) {
                 if (adj.get(vertex).isEmpty()) {
                     adj.get(vertex).addLast(newVertex);
+                    edges++;
+
                 } else if (!adj.isEmpty() && adj.get(vertex).getLast() >= newVertex) {
                     if (adj.get(vertex).getFirst() >= newVertex) {
                         adj.get(vertex).addFirst(newVertex);
+                        edges++;
                     } else {
                         adj.get(vertex).placeIterator();
                         while (adj.get(vertex).getIterator() < adj.get(vertex).getLength()) {
                             if (adj.get(vertex).getIterator() > newVertex) {
                                 adj.get(vertex).reverseIterator();
                                 adj.get(vertex).addIterator(newVertex);
+                                edges++;
+
                                 break;
                             } else {
                                 adj.get(vertex).advanceIterator();
@@ -148,9 +172,9 @@ public class Graph {
                     }
                 } else {
                     adj.get(vertex).addLast(newVertex);
+                    edges++;
                 }
             }
-            edges++;
         }
     }
 

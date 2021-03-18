@@ -297,8 +297,11 @@ public class UserInterface {
 					}
 				}
 				System.out.println("Some friends you may know:");
-				for(int i = 0; i < 5; i++){
-					for(int j = 0; j < recommended.size(); j++){
+				if (recommended.size() == 0) {
+					System.out.println("You currently do not have any recommendations.");
+				}
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < recommended.size(); j++){
 						String[] recommendedUser = recommended.get(j).split(":", 0);
 						if (Integer.parseInt(recommendedUser[0]) == i){
 							System.out.println(recommended.get(j));
