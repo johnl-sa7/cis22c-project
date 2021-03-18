@@ -81,7 +81,7 @@ public class Graph {
      * the precondition is violated
      */
     public int getDistance(int v) throws IndexOutOfBoundsException{
-        if (v <= 0 && v > vertices) {
+        if (v < 0 && v > vertices) {
             throw new IndexOutOfBoundsException("getDistance(): " + v + " is out of bounds.");
         }
         return distance.get(v);
@@ -109,7 +109,7 @@ public class Graph {
      * @throws IndexOutOfBoundsException when the precondition is violated
      */
     public Character getColor(int v) throws IndexOutOfBoundsException {
-        if (v <= 0 && v > vertices) {
+        if (v < 0 || v > vertices) {
             throw new IndexOutOfBoundsException("getColor(): " + v + " is out of bounds.");
         }
         return color.get(v);
@@ -125,7 +125,9 @@ public class Graph {
             while(adj.get(vertex).getIterator() < adj.get(vertex).getLength()) {
                 if ( adj.get(vertex).getIterator() == newVertex) {
                     adj.get(vertex).removeIterator();
+                    break;
                 }
+                adj.get(vertex).advanceIterator();
             }
         }
     }
