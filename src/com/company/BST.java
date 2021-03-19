@@ -234,15 +234,15 @@ public class BST<T> {
             return null;
         }
     }
-    
+
     /**
      * Prints the data in sorted order
      * to the console followed by a new line
      */
     public ArrayList<T> getNodes () {
-    	ArrayList<T> temp = new ArrayList<T>();
-       return getNodes(root, temp);
-        
+        ArrayList<T> temp = new ArrayList<T>();
+        return getNodes(root, temp);
+
     }
 
     /**
@@ -255,7 +255,7 @@ public class BST<T> {
             return null;
         }
         getNodes(node.left, temp);
-        temp.add(node.data); 
+        temp.add(node.data);
         getNodes(node.right, temp);
         return temp;
     }
@@ -347,7 +347,7 @@ public class BST<T> {
 
     /***ADDITONAL OPERATIONS***/
 
-    
+
     /**
      * Prints the data in pre order
      * to the console followed by a new
@@ -391,7 +391,7 @@ public class BST<T> {
             return;
         }
         inOrderPrint(node.left);
-        System.out.print(node.data + "\n\n");
+        System.out.print("\n" + node.data + "\n");
         inOrderPrint(node.right);
     }
 
@@ -418,5 +418,3 @@ public class BST<T> {
         System.out.print(node.data + " ");
     }
 }
-
-

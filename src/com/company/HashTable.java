@@ -11,7 +11,7 @@ public class HashTable<T> {
 	 * Constructor for the hash table. Initializes the Table to be sized according
 	 * to value passed in as a parameter Inserts size empty Lists into the table.
 	 * Sets numElements to 0
-	 * 
+	 *
 	 * @param size the table size
 	 */
 	public HashTable(int size) {
@@ -27,7 +27,7 @@ public class HashTable<T> {
 
 	/**
 	 * returns the hash value in the Table for a given Object
-	 * 
+	 *
 	 * @param t the Object
 	 * @return the index in the Table
 	 */
@@ -38,7 +38,7 @@ public class HashTable<T> {
 
 	/**
 	 * counts the number of keys at this index
-	 * 
+	 *
 	 * @param index the index in the Table
 	 * @precondition 0 <= index < Table.length
 	 * @return the count of keys at this index
@@ -55,16 +55,19 @@ public class HashTable<T> {
 
 	/**
 	 * returns total number of keys in the Table
-	 * 
+	 *
 	 * @return total number of keys
 	 */
 	public int getNumElements() {
 		return numElements;
 	}
 
+	public int getSize() {
+		return Table.size();
+	}
 	/**
 	 * Accesses a specified key in the Table
-	 * 
+	 *
 	 * @param t the key to search for
 	 * @return the value to which the specified key is mapped, or null if this table
 	 *         contains no mapping for the key.
@@ -88,7 +91,7 @@ public class HashTable<T> {
 
 	/**
 	 * Determines whether a specified key is in the Table
-	 * 
+	 *
 	 * @param t the key to search for
 	 * @return whether the key is in the Table
 	 * @precondition t != null
@@ -114,7 +117,7 @@ public class HashTable<T> {
 	/**
 	 * Inserts a new element in the Table at the end of the chain in the bucket to
 	 * which the key is mapped
-	 * 
+	 *
 	 * @param t the key to insert
 	 * @precondition t != null
 	 * @throws NullPointerException for a null key
@@ -132,7 +135,7 @@ public class HashTable<T> {
 	 * removes the key t from the Table calls the hash method on the key to
 	 * determine correct placement has no effect if t is not in the Table or for a
 	 * null argument
-	 * 
+	 *
 	 * @param t the key to remove
 	 * @throws NullPointerException if the key is null
 	 */
@@ -169,7 +172,7 @@ public class HashTable<T> {
 	 * its own line, with a blank line separating each key Above the keys, prints
 	 * the message "Printing bucket #<bucket>:" Note that there is no <> in the
 	 * output
-	 * 
+	 *
 	 * @param bucket the index in the Table
 	 */
 	public void printBucket(int bucket) {
@@ -221,4 +224,3 @@ public class HashTable<T> {
 	}
 
 }
-

@@ -24,7 +24,7 @@ public class List<T> {
 
 	/**
 	 * Instantiates a new List with default values
-	 * 
+	 *
 	 * @postcondition Creating object variables
 	 */
 	public List() {
@@ -35,7 +35,7 @@ public class List<T> {
 
 	/**
 	 * Instantiates a new List by copying another List
-	 * 
+	 *
 	 * @param original the List to make a copy of
 	 * @postcondition a new List object, which is an identical but separate copy of
 	 *                the List original
@@ -63,7 +63,7 @@ public class List<T> {
 
 	/**
 	 * Returns the value stored in the first node
-	 * 
+	 *
 	 * @precondition check that first node exists
 	 * @return the value stored at node first
 	 * @throws NoSuchElementException when precondition is violated
@@ -77,7 +77,7 @@ public class List<T> {
 
 	/**
 	 * Returns the value stored in the last node
-	 * 
+	 *
 	 * @precondition check that last node exists
 	 * @return the value stored in the node last
 	 * @throws NoSuchElementException when precondition is violated
@@ -91,7 +91,7 @@ public class List<T> {
 
 	/**
 	 * Returns the current length of the list
-	 * 
+	 *
 	 * @return the length of the list from 0 to n
 	 */
 	public int getLength() {
@@ -100,7 +100,7 @@ public class List<T> {
 
 	/**
 	 * Returns whether the list is currently empty
-	 * 
+	 *
 	 * @return whether the list is empty
 	 */
 	public boolean isEmpty() {
@@ -109,7 +109,7 @@ public class List<T> {
 
 	/**
 	 * Returns the element currently pointed at by the iterator
-	 * 
+	 *
 	 * @precondition check that the iterator exists
 	 * @return the element pointed at by the iterator
 	 * @throws NoSuchElementException when precondition is violated
@@ -123,7 +123,7 @@ public class List<T> {
 
 	/**
 	 * Returns whether the list is offEnd
-	 * 
+	 *
 	 * @return whether the list is offEnd
 	 */
 	public boolean offEnd() {
@@ -132,7 +132,7 @@ public class List<T> {
 
 	/**
 	 * Determines whether two Lists have the same data in the same order
-	 * 
+	 *
 	 * @param L the List to compare to this List
 	 * @return whether the two Lists are equal
 	 */
@@ -166,7 +166,7 @@ public class List<T> {
 
 	/**
 	 * Creates a new first element
-	 * 
+	 *
 	 * @param data the data to insert at the front of the list
 	 * @postcondition A new node exists at the front of the list
 	 */
@@ -184,7 +184,7 @@ public class List<T> {
 
 	/**
 	 * Creates a new last element
-	 * 
+	 *
 	 * @param data the data to insert at the end of the list
 	 * @postcondition A new node exists at the end of the list
 	 */
@@ -202,14 +202,14 @@ public class List<T> {
 
 	/**
 	 * removes the element at the front of the list
-	 * 
+	 *
 	 * @precondition at least one node exists in the list
 	 * @postcondition the first node from the list has been removed
 	 * @throws NoSuchElementException when precondition is violated
 	 */
 	public void removeFirst() throws NoSuchElementException {
 		if(iterator == first) iterator = null;
-		
+
 		if (length == 0) {
 			throw new NoSuchElementException("removeFirst(): Cannot remove from an empty List!");
 		} else if (length == 1) {
@@ -223,14 +223,14 @@ public class List<T> {
 
 	/**
 	 * removes the element at the end of the list
-	 * 
+	 *
 	 * @precondition at least one node exists in the list
 	 * @postcondition the last node from the list has been removed
 	 * @throws NoSuchElementException when precondition is violated
 	 */
 	public void removeLast() throws NoSuchElementException {
 		if(iterator == first || iterator == last) iterator = null;
-		
+
 		if (length == 0) {
 			throw new NoSuchElementException("removeLast(): Cannot remove from an empty List!");
 		} else if (length == 1) {
@@ -244,7 +244,7 @@ public class List<T> {
 
 	/**
 	 * moves iterator to the start of the list
-	 * 
+	 *
 	 * @postcondition iterator will be at the first node
 	 */
 	public void placeIterator() {
@@ -253,7 +253,7 @@ public class List<T> {
 
 	/**
 	 * removes the element currently referenced by the iterator
-	 * 
+	 *
 	 * @precondition iterator != null
 	 * @throws NullPointerException when iterator is off end
 	 * @postcondition iterator will be null
@@ -276,7 +276,7 @@ public class List<T> {
 
 	/**
 	 * inserts an element after the node currently pointed to by the iterator
-	 * 
+	 *
 	 * @precondition iterator != null
 	 * @throws NullPointerException when iterator is off end
 	 * @postcondition element will be added to the list
@@ -298,7 +298,7 @@ public class List<T> {
 
 	/**
 	 * moves the iterator up by one node
-	 * 
+	 *
 	 * @precondition check that iterator exists
 	 * @postcondition iterator is moved up by one node
 	 * @throws NullPointerException when precondition is violated
@@ -312,7 +312,7 @@ public class List<T> {
 
 	/**
 	 * moves the iterator down by one node
-	 * 
+	 *
 	 * @precondition check that last node exists
 	 * @postcondition iterator is moved down by one node
 	 * @throws NullPointerException when precondition is violated
@@ -328,7 +328,7 @@ public class List<T> {
 
 	/**
 	 * List with each value on its own line At the end of the List a new line
-	 * 
+	 *
 	 * @return the List as a String for display
 	 */
 	@Override
@@ -339,13 +339,13 @@ public class List<T> {
 			result += temp.data + " ";
 			temp = temp.next;
 		}
-		return result;
+		return result + "\n";
 	}
 
 	/**
 	 * prints contents of the linked list to the screen in the format #. <element>
 	 * followed by a newline
-	 * 
+	 *
 	 * @return print a numbered list
 	 */
 	public void printNumberedList() {
@@ -357,40 +357,40 @@ public class List<T> {
 			val = val.next;
 		}
 	}
-	
+
 	/**
-	* Points the iterator at first
-	* and then advances it to the
-	* specified index
-	* @param index the index where
-	* the iterator should be placed
-	* @precondition 0 < index <= length
-	* @throws IndexOutOfBoundsException
-	* when precondition is violated
-	*/
+	 * Points the iterator at first
+	 * and then advances it to the
+	 * specified index
+	 * @param index the index where
+	 * the iterator should be placed
+	 * @precondition 0 < index <= length
+	 * @throws IndexOutOfBoundsException
+	 * when precondition is violated
+	 */
 	public void iteratorToIndex(int index) throws IndexOutOfBoundsException{
-	   if(index > length) {
-		   throw new IndexOutOfBoundsException("iteratorToIndex(): index exceeds total length of list");
-	   }
-	   else {
-		   iterator = first;
-		   for(int i = 1; i != index; i++) {
-			   iterator = iterator.next;
-		   }
-	   }
+		if(index > length) {
+			throw new IndexOutOfBoundsException("iteratorToIndex(): index exceeds total length of list");
+		}
+		else {
+			iterator = first;
+			for(int i = 1; i != index; i++) {
+				iterator = iterator.next;
+			}
+		}
 	}
-	
+
 	/**
-	* Searches the List for the specified
-	* value using the linear search algorithm
-	* @param value the value to search for
-	* @return the location of value in the
-	* List or -1 to indicate not found
-	* Note that if the List is empty we will
-	* consider the element to be not found
-	* @post: position of the iterator remains
-	* unchanged
-	*/
+	 * Searches the List for the specified
+	 * value using the linear search algorithm
+	 * @param value the value to search for
+	 * @return the location of value in the
+	 * List or -1 to indicate not found
+	 * Note that if the List is empty we will
+	 * consider the element to be not found
+	 * @post: position of the iterator remains
+	 * unchanged
+	 */
 	public int linearSearch(T value) {
 		//return -1 if length == 0?
 		Node temp = first;
@@ -402,4 +402,3 @@ public class List<T> {
 		return temp == null ? -1 : i;
 	}
 }
-
